@@ -9,7 +9,7 @@ Have pay attention all the curves in Jepsian are customizable and you can change
 
 ### Installation:
 
-Just copy the indicator(Jepsian.algo) from Info Jepsian Directory to your PC and double-click on it. It will install automatically on your Ctrader-Platform. You can also download it directly from the Ctrader network:      
+Just copy the indicator(Jepsian.algo) from Info Compiled Directory to your PC and double-click on it. It will install automatically on your Ctrader-Platform. You can also download it directly from the Ctrader network:      
 
 <a href="https://ctrader.com/algos/indicators/show/2909" title="Info Panel">Ctrader Developer Network</a>
 
