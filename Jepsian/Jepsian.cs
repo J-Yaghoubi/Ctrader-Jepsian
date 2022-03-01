@@ -1,12 +1,14 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 ///                                     Jepsian                                      ///
 ///                     (Have full control over Ichimoku cloud)                      ///
 ///                                                                                  ///
 ///         Publish date  18-DEC-2021                                                ///
-///         Versian  1.0.0                                                           ///
+///         Version  1.0.0                                                           ///
 ///         By  Seyed Jafar Yaghoubi                                                 ///
-///         Email  algo3xp3rt@gmail.com                                              ///
 ///         License  MIT                                                             ///
+///         More info https://github.com/J-Yaghoubi/                                 ///
+///         Contact  algo3xp3rt@gmail.com                                            ///
 ///                                                                                  ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,7 +27,7 @@ namespace cAlgo
     public class Jepsian : Indicator
     {
 
-        #region User Input
+        #region parameters
 
         [Parameter("Tenkan sen", DefaultValue = 9, MinValue = 1, Group = "Period")]
         public int T_Period { get; set; }
@@ -34,7 +36,7 @@ namespace cAlgo
         public int K_Period { get; set; }
 
         [Parameter("Senkou span B", DefaultValue = 52, MinValue = 1, Group = "Period")]
-        public int S_Period { get; set; }
+        public int SB_Period { get; set; }
 
         [Parameter("Quality Line", DefaultValue = 26, MinValue = 1, Group = "Period")]
         public int Q_Period { get; set; }
@@ -74,9 +76,6 @@ namespace cAlgo
         public string D_Color { get; set; }
 
 
-        #endregion
-
-        #region Japsian Output
         [Output("Tenkan sen", LineStyle = LineStyle.Solid, LineColor = "Red")]
         public IndicatorDataSeries T_Result { get; set; }
 
@@ -100,7 +99,7 @@ namespace cAlgo
 
         #endregion
 
-        #region Public Variables
+        #region Global Variables
 
         private IchimokuKinkoHyo _ICHI;
         private Bars Monthly, Daily;
@@ -109,7 +108,7 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _ICHI = Indicators.IchimokuKinkoHyo(T_Period, K_Period, S_Period);
+            _ICHI = Indicators.IchimokuKinkoHyo(T_Period, K_Period, SB_Period);
             if (MHL)
                 Monthly = MarketData.GetBars(TimeFrame.Monthly);
             if (DHL)
@@ -123,7 +122,7 @@ namespace cAlgo
             T_Result[index] = _ICHI.TenkanSen.Last(0);
             K_Result[index] = _ICHI.KijunSen.Last(0);
             C_Result[index + C_Shift] = _ICHI.ChikouSpan.Last(0);
-            SA_Result[index + K_Shift] = _ICHI.SenkouSpanA.Last(0);
+            SA_Result[index + K_Shift] = (_ICHI.TenkanSen.Last(0) + _ICHI.KijunSen.Last(0)) / 2;
             SB_Result[index + K_Shift] = _ICHI.SenkouSpanB.Last(0);
             Q_Result[index + Q_Shift] = _ICHI.KijunSen.Last(0);
             D_Result[index + D_Shift] = _ICHI.KijunSen.Last(0);
@@ -144,7 +143,7 @@ namespace cAlgo
                 Chart.DrawTrendLine("Daily Low", Chart.LastVisibleBarIndex, d_low, Chart.LastVisibleBarIndex + DHL_Length, d_low, D_Color, 2, LineStyle.Solid);
             }
 
-            Chart.DrawStaticText("Copyright", "algo3xp3rt@gmail.com", VerticalAlignment.Bottom, HorizontalAlignment.Left, Color.Gray);
+            Chart.DrawStaticText("Copyright", "ⒸS.J.Yaghoubi", VerticalAlignment.Bottom, HorizontalAlignment.Left, Color.Gray);
         }
         //END METHOD CALCULATE
     }
