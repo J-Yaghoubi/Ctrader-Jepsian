@@ -7,7 +7,7 @@ Jepsian is here to let you have full control over the original Ichimoku. With th
 
 Have pay attention all the curves in Jepsian are customizable and you can change the visual side to what you want or disable them.
 
-### Installation:
+## Installation:
 
 Just copy the indicator(Jepsian.algo) from Compiled Directory to your PC and double-click on it. It will install automatically on your Ctrader-Platform. You can also download it directly from the Ctrader network:      
 
